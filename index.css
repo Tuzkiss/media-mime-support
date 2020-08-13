@@ -13,7 +13,7 @@ table {
 }
 
 table, th, td {
-	border: 1px solid gray;
+	border: 1px solid #666;
 }
 
 th, td {
@@ -22,14 +22,24 @@ th, td {
 	vertical-align:middle;
 }
 
+a,
+a:link,
+a:visited,
+a:active {
+	color: #2980b9;
+}
+
 .ok {
-	background-color: green;
+	background-color: #16a085;
+	color: #f1f1f1;
 }
 
 .maybe {
-	background-color: orange;
+	background-color: #f39c12;
+	color: #f1f1f1;
 }
 
 .fail {
-	background-color: red;
+	background-color: #c0392b;
+	color: #f1f1f1;
 }
