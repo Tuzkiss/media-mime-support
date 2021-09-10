@@ -1,5 +1,5 @@
 body {
-	max-width: 1000px;
+	max-width: 1100px;
 	margin: auto;
 	font-family: sans-serif;
 }
@@ -7,7 +7,7 @@ body {
 table {
 	border-collapse:collapse;
 	width:100%;
-	max-width:1000px;
+	max-width:1100px;
 	min-width:400px;
 	text-align:center;
 }
@@ -27,6 +27,12 @@ a:link,
 a:visited,
 a:active {
 	color: #2980b9;
+}
+
+.ok,
+.maybe,
+.fail {
+	opacity: 0.9;
 }
 
 .ok {
