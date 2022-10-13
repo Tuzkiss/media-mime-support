@@ -18,4 +18,8 @@ var VIDEO_CODECS = [
 
 	// vp09.<profile>.<level>.<bitDepth>[.<chromaSubsampling>.<colourPrimaries>.<transferCharacteristics>.<matrixCoefficients>.<videoFullRangeFlag>]
 	{ codec: "vp09.00.50.08", description: "VP9, Profile 0, Level 5, 8-bit"},
+
+	{ codec: "mp4a.40.2", description: "AAC-LC"},
+	{ codec: "mp4a.40.5", description: "AAC-HE"},
+	{ codec: "mp4a.40.29", description: "AAC-HE v2"},
 ];
