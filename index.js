@@ -1,4 +1,4 @@
-function addMimeChecks(table,mime,desc) { 
+function addMimeChecks(table,mime,desc, percent) { 
 	var video = document.createElement("video");
 	var tr;
 	var video_result;
@@ -9,8 +9,14 @@ function addMimeChecks(table,mime,desc) {
 	} catch (e) { 
 		mediasource_result = e.message; 
 	}
+
+	let percentTdHtml = '';
+	if(percent) {
+		percentTdHtml = '<td>' + Math.round(percent * 100000) / 1000 + '%</td>';
+	}
+
 	tr = document.createElement("tr");
-	tr.innerHTML = "<td id='"+mime+"'>"+desc+"</td><td><a href='#"+mime+"'>"+mime+"</a></td><td class='"+(video_result === ""? "fail" : (video_result === "maybe" ? "maybe": "ok"))+"'>"+(video_result.length > 0 ? video_result : "no")+"</td><td class='"+(mediasource_result === true ? "ok" : "fail")+"'>"+mediasource_result+"</td>";
+	tr.innerHTML = "<td id='"+mime+"'>"+desc+"</td><td><a href='#"+mime+"'>"+mime+"</a></td><td class='"+(video_result === ""? "fail" : (video_result === "maybe" ? "maybe": "ok"))+"'>"+(video_result.length > 0 ? video_result : "no")+"</td><td class='"+(mediasource_result === true ? "ok" : "fail")+"'>"+mediasource_result+"</td>" + percentTdHtml;
 	table.appendChild(tr);
 }
 
@@ -58,17 +64,20 @@ window.onload = function() {
 	}
 	addParagraph(results, "avc_codecs", "Checking support for AVC codecs with parameters");
 	table = createTableHeader(results);
-	addAVCChecks(addMimeChecks, table);
+	addChecks(getAllAVCCodecs, addMimeChecks, table);
 
 	addParagraph(results, "av1_codecs", "Checking support for AV1 codecs with parameters");
 	table = createTableHeader(results);
-	addAV1Checks(addMimeChecks, table);
+	addChecks(getAllAV1Codecs, addMimeChecks, table);
 
 	addParagraph(results, "other_video_codecs", "Checking support for other codecs such as VP9, HEVC");
 	table = createTableHeader(results);
-	for(i in VIDEO_CODECS) {
-		addMimeChecks(table, 'video/mp4; codecs="'+VIDEO_CODECS[i].codec+'"', VIDEO_CODECS[i].description);
-	}
+	addChecks(getAllVP9Codecs, addMimeChecks, table);
+	addChecks(getAllHEVCCodecs, addMimeChecks, table);
+
+	addParagraph(results, "other_custom_video_codecs", "Checking support for other codecs...");
+	table = createTableHeader(results);
+	addChecks(getAllOthersCodecs, addMimeChecks, table);
 };
 
 function addOwnTest(id, v) {
@@ -77,3 +86,9 @@ function addOwnTest(id, v) {
 	table = createTableHeader(results);
 	addMimeChecks(table, 'video/mp4; codecs="'+v+'"', "");
 }
+
+function addChecks(getAllCodecs, add,table)
+{
+	getAllCodecs().forEach(e => add(table, 'video/mp4; codecs="'+e.codec+'"', e.description, e.percent));
+}
+
